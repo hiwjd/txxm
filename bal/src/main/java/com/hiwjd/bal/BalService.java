@@ -8,28 +8,28 @@ import org.springframework.transaction.annotation.Transactional;
 
 public class BalService {
 
-  private UserService userService;
-  private OperatorService operatorService;
+    private UserService userService;
+    private OperatorService operatorService;
 
-  public BalService(UserService userService, OperatorService operatorService) {
-    this.userService = userService;
-    this.operatorService = operatorService;
-  }
+    public BalService(UserService userService, OperatorService operatorService) {
+        this.userService = userService;
+        this.operatorService = operatorService;
+    }
 
-  @Transactional
-  public Long create(OperatorDTO dto) {
-    User user = new User();
-    user.setUn(dto.getUn());
-    user.setPassword(dto.getPassword());
-    Long uid = userService.create(user);
+    @Transactional
+    public Long create(OperatorDTO dto) {
+        User user = new User();
+        user.setUn(dto.getUn());
+        user.setPassword(dto.getPassword());
+        Long uid = userService.create(user);
 
-    Operator operator = new Operator();
-    operator.setCardealerId(dto.getCardealerId());
-    operator.setUid(uid);
-    operator.setUn(dto.getUn());
-    operator.setMobile(dto.getMobile());
-    operatorService.create(operator);
+        Operator operator = new Operator();
+        operator.setCardealerId(dto.getCardealerId());
+        operator.setUid(uid);
+        operator.setUn(dto.getUn());
+        operator.setMobile(dto.getMobile());
+        operatorService.create(operator);
 
-    return uid;
-  }
+        return uid;
+    }
 }

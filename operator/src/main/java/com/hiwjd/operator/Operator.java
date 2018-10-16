@@ -6,10 +6,10 @@ import java.util.Date;
 
 @Data
 public class Operator {
-  private Long uid;
-  private Long cardealerId;
-  private String un;
-  private String mobile;
-  private Date createdAt;
-  private Date updatedAt;
+    private Long uid;
+    private Long cardealerId;
+    private String un;
+    private String mobile;
+    private Date createdAt;
+    private Date updatedAt;
 }

@@ -1,4 +1,4 @@
-package com.hiwjd.operator;
+package com.hiwjd.cardealer;
 
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
@@ -17,7 +17,7 @@ public class Helper {
         Configuration configuration = new Configuration(environment);
         configuration.setLazyLoadingEnabled(true);
         configuration.setMapUnderscoreToCamelCase(true);
-        configuration.addMapper(OperatorMapper.class);
+        configuration.addMapper(CardealerMapper.class);
 
         SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
         SqlSessionFactory factory = builder.build(configuration);

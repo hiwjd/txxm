@@ -1,22 +1,22 @@
 package com.hiwjd.operator;
 
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.mapper.MapperFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
+
+import javax.sql.DataSource;
 
 public class OperatorService {
 
-  private final OperatorDAO operatorDAO;
+    private final OperatorDAO operatorDAO;
 
-  public OperatorService(SqlSessionFactory sqlSessionFactory) throws Exception {
-    sqlSessionFactory.getConfiguration().addMapper(OperatorMapper.class);
-    MapperFactoryBean mapperFactoryBean = new MapperFactoryBean();
-    mapperFactoryBean.setSqlSessionFactory(sqlSessionFactory);
-    mapperFactoryBean.setMapperInterface(OperatorMapper.class);
-    OperatorMapper operatorMapper = (OperatorMapper) mapperFactoryBean.getObject();
-    operatorDAO = new OperatorDAO(operatorMapper);
-  }
+    public OperatorService(DataSource dataSource) {
+        SqlSessionFactory sqlSessionFactory = Helper.buildSqlSessionFactory(dataSource);
+        SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory);
+        OperatorMapper operatorMapper = sqlSessionTemplate.getMapper(OperatorMapper.class);
+        operatorDAO = new OperatorDAO(operatorMapper);
+    }
 
-  public void create(Operator operator) {
-    operatorDAO.create(operator);
-  }
+    public void create(Operator operator) {
+        operatorDAO.create(operator);
+    }
 }

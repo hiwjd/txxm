@@ -3,22 +3,22 @@ package com.hiwjd.cardealer;
 import com.hiwjd.bal.BalService;
 import com.hiwjd.bal.OperatorDTO;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.mapper.MapperFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.sql.DataSource;
 
 public class CardealerService {
 
   private BalService balService;
   private CardealerDAO cardealerDAO;
 
-  public CardealerService(BalService balService, SqlSessionFactory sqlSessionFactory) throws Exception {
+  public CardealerService(BalService balService, DataSource dataSource) {
     this.balService = balService;
 
-    sqlSessionFactory.getConfiguration().addMapper(CardealerMapper.class);
-    MapperFactoryBean mapperFactoryBean = new MapperFactoryBean();
-    mapperFactoryBean.setSqlSessionFactory(sqlSessionFactory);
-    mapperFactoryBean.setMapperInterface(CardealerMapper.class);
-    CardealerMapper cardealerMapper = (CardealerMapper) mapperFactoryBean.getObject();
+    SqlSessionFactory sqlSessionFactory = Helper.buildSqlSessionFactory(dataSource);
+    SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory);
+    CardealerMapper cardealerMapper = sqlSessionTemplate.getMapper(CardealerMapper.class);
     cardealerDAO = new CardealerDAO(cardealerMapper);
   }
 

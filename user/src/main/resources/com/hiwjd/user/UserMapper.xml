@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hiwjd.user.UserMapper">
-    <insert id="create" parameterType="com.hiwjd.user.User" keyProperty="uid">
+    <insert id="create" parameterType="com.hiwjd.user.User" keyProperty="uid" useGeneratedKeys="true">
         insert into user(un, password) values(#{un}, #{password})
     </insert>
 </mapper>

@@ -1,23 +1,23 @@
 package com.hiwjd.user;
 
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.mapper.MapperFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
+
+import javax.sql.DataSource;
 
 public class UserService {
 
-  private final UserDAO userDAO;
+    private final UserDAO userDAO;
 
-  public UserService(SqlSessionFactory sqlSessionFactory) throws Exception {
-    sqlSessionFactory.getConfiguration().addMapper(UserMapper.class);
-    MapperFactoryBean mapperFactoryBean = new MapperFactoryBean();
-    mapperFactoryBean.setSqlSessionFactory(sqlSessionFactory);
-    mapperFactoryBean.setMapperInterface(UserMapper.class);
-    UserMapper userMapper = (UserMapper) mapperFactoryBean.getObject();
-    userDAO = new UserDAO(userMapper);
-  }
+    public UserService(DataSource dataSource) {
+        SqlSessionFactory sqlSessionFactory = Helper.buildSqlSessionFactory(dataSource);
+        SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory);
+        UserMapper userMapper = sqlSessionTemplate.getMapper(UserMapper.class);
+        userDAO = new UserDAO(userMapper);
+    }
 
-  public Long create(User user) {
-    userDAO.create(user);
-    return user.getUid();
-  }
+    public Long create(User user) {
+        userDAO.create(user);
+        return user.getUid();
+    }
 }
