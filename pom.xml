@@ -92,5 +92,6 @@
         <module>operator</module>
         <module>bal</module>
         <module>app</module>
+        <module>cardealer</module>
     </modules>
 </project>

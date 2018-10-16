@@ -1,6 +1,7 @@
 package com.hiwjd.app.conf;
 
 import com.hiwjd.bal.BalService;
+import com.hiwjd.cardealer.CardealerService;
 import com.hiwjd.operator.OperatorService;
 import com.hiwjd.user.UserService;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -36,7 +37,7 @@ public class Config {
   }
 
   @Bean
-  public DataSourceTransactionManager transactionManager(DataSource dataSource) {
+  public PlatformTransactionManager transactionManager(DataSource dataSource) {
     DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
     transactionManager.setDataSource(dataSource);
     return transactionManager;
@@ -73,8 +74,13 @@ public class Config {
   }
 
   @Bean
-  public DataSourceTransactionManager dataSourceTransactionManager(DataSource dataSource) {
-    return new DataSourceTransactionManager(dataSource);
+  public CardealerService cardealerService(BalService balService, SqlSessionFactoryBean sqlSessionFactoryBean) throws Exception {
+    return new CardealerService(balService, sqlSessionFactoryBean.getObject());
   }
+
+//  @Bean
+//  public DataSourceTransactionManager dataSourceTransactionManager(DataSource dataSource) {
+//    return new DataSourceTransactionManager(dataSource);
+//  }
 
 }

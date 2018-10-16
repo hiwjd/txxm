@@ -2,6 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hiwjd.operator.OperatorMapper">
     <insert id="create" parameterType="com.hiwjd.operator.Operator" keyProperty="uid">
-        insert into operator(uid, un, mobile) values(#{uid}, #{un}, #{mobile})
+        insert into operator(uid, cardealer_id, un, mobile) values(#{uid}, #{cardealerId}, #{un}, #{mobile})
     </insert>
 </mapper>
